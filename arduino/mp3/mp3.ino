@@ -10,7 +10,7 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(MOTOR_RIGHT);
 
 int forwardSpeed = 30;
 int turnSpeedForward = 30;
-int turnSpeedReverse = -30;
+int turnSpeedReverse = -10;
 
 uint16_t sensor_threshold = 500;
 
@@ -148,9 +148,9 @@ void loop() {
   int leftCommand = 0;
   int rightCommand = 0;
   if (sensors.left && sensors.right) {
-    // go straight
-    leftCommand = forwardSpeed;
-    rightCommand = forwardSpeed;
+    // go left
+    leftCommand = turnSpeedReverse;
+    rightCommand = turnSpeedForward;
   } else if (!sensors.left && sensors.right) {
     // go straight
     leftCommand = forwardSpeed;
@@ -168,7 +168,7 @@ void loop() {
   setMotors(leftCommand, rightCommand);
 
   // Gather data
-//  char buff[80];
-//  sprintf(buff, "%i,%i,%i,%i", sensors.rawLeft, sensors.rawRight, leftCommand, rightCommand);
-//  Serial.println(buff);
+  char buff[80];
+  sprintf(buff, "%i,%i,%i,%i", sensors.rawLeft, sensors.rawRight, leftCommand, rightCommand);
+  Serial.println(buff);
 }
